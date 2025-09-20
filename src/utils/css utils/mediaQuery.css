@@ -88,7 +88,7 @@
   }
 }
 
-@media screen and (min-width: 768.1px) {
+@media screen and (min-width: 768px) {
   /* general */
   .container {
     max-width: 80% !important;
@@ -117,7 +117,7 @@
   }
 }
 
-@media screen and (min-width: 992.1px) {
+@media screen and (min-width: 992px) {
   /* tasks grid */
   .tasks-container .task-box {
     width: calc(100% / 3 - 15px);
@@ -125,5 +125,15 @@
 
   .modal-content {
     max-width: 50% !important;
+  }
+}
+@media screen and (min-width: 1200px) {
+  /* tasks grid */
+  .tasks-container .task-box {
+    width: calc(100% / 3 - 15px);
+  }
+
+  .modal-content {
+    max-width: 40% !important;
   }
 }

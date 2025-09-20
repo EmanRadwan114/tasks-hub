@@ -105,7 +105,7 @@ function TaskCard({ task }) {
               cursor="pointer"
               color="var(--primaryColor)"
               onClick={() => setIsActionsOpen((previous) => !previous)}
-              onMouseEnter={() => setIsActionsOpen((previous) => !previous)}
+              onMouseEnter={() => setIsActionsOpen(true)}
             />
             {/* task actions */}
             {isActionsOpen && (
