@@ -21,7 +21,6 @@ const getTaskById = async (taskId) => {
 
 export const createTask = async (newData) => {
   const createdTask = await axiosAPI.post(`/tasks`, newData);
-  console.log(createdTask);
   return createdTask?.data[0];
 };
 

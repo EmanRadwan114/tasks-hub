@@ -37,7 +37,6 @@ function DropDownItem({
         setColor(option?.color);
       }}
     >
-      {console.log(selectedItem)}
       {option?.name}
     </li>
   );

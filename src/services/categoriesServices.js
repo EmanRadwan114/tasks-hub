@@ -2,8 +2,6 @@ import axiosAPI from "./../utils/ApiUrl";
 
 const getAllCategories = async () => {
   const categories = await axiosAPI.get("/categories?order=name.asc");
-  console.log(categories);
-
   return categories?.data;
 };
 

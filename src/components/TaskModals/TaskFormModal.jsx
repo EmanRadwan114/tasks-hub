@@ -91,7 +91,6 @@ function TaskEditModal() {
     validateOnBlur: true,
     validateOnChange: true,
     onSubmit: (values) => {
-      console.log(values);
       values.category_id = categories.find(
         (categ) => categ.name === taskCategory
       ).id;
@@ -130,7 +129,6 @@ function TaskEditModal() {
               ? "Edit Task"
               : ""}
           </h2>
-          {console.log(taskCategory)}
           <X
             className={`${styles.close_icon}`}
             cursor="pointer"
