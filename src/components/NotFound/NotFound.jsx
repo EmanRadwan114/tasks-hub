@@ -31,7 +31,7 @@ function NotFound() {
 export default NotFound;
 
 const style = {
-  container: { minHeight: "100vh" },
+  container: { minHeight: "100vh", padding: "1rem" },
   img: {
     width: "40%",
   },
