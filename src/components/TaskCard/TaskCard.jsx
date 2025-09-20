@@ -96,7 +96,16 @@ function TaskCard({ task }) {
               task?.completed ? "line-through" : ""
             }`}
           >
-            {task?.title ? `${task?.title}` : "No Title Found 😞"}
+            <Link
+              to={`/${task?.id}`}
+              style={{ textDecoration: "none", color: "inherit" }}
+              onClick={() => {
+                setIsModalOpen((prev) => !prev);
+                setTaskAction("view");
+              }}
+            >
+              {task?.title ? `${task?.title}` : "No Title Found 😞"}
+            </Link>
           </h2>
 
           {/* actions menu */}
@@ -104,9 +113,9 @@ function TaskCard({ task }) {
             <EllipsisVertical
               cursor="pointer"
               color="var(--primaryColor)"
-              // onClick={() => setIsActionsOpen((previous) => !previous)}
-              onMouseEnter={() => setIsActionsOpen(true)}
-              size={30}
+              onClick={() => setIsActionsOpen((previous) => !previous)}
+              onMouseEnter={() => setIsActionsOpen((previous) => !previous)}
+              size={24}
             />
             {/* task actions */}
             {isActionsOpen && (
