@@ -14,13 +14,14 @@ import Button from "../Button/Button";
 import { useCategories } from "../../context/CategoriesContext";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Spinner from "../Spinner/Spinner";
 
 function TaskEditModal() {
   const { taskId } = useParams();
   const { setIsModalOpen, taskAction, setTaskPriority, taskPriority } =
     useTasks();
   const { categories, setTaskCategory, taskCategory } = useCategories();
-  const { data: selectedTask } = useGetTaskByID(taskId);
+  const { data: selectedTask, isLoading } = useGetTaskByID(taskId);
   const { mutate: updateTask } = useUpdateTask();
   const { mutate: createTask } = useCreateTask();
 
@@ -138,201 +139,212 @@ function TaskEditModal() {
         </header>
 
         {/* task data */}
-        <section>
-          <form onSubmit={formik.handleSubmit}>
-            {/* task id */}
-            {taskAction === "edit" && (
-              <div
-                className={`flex items-center gap-lg ${styles.field_box} ${styles.task_id}`}
-              >
+        {isLoading ? (
+          <section className="flex-center h-screen">
+            <Spinner />;
+          </section>
+        ) : (
+          <section>
+            <form onSubmit={formik.handleSubmit}>
+              {/* task id */}
+              {taskAction === "edit" && (
+                <div
+                  className={`flex items-center gap-lg ${styles.field_box} ${styles.task_id}`}
+                >
+                  <label
+                    htmlFor="task-id"
+                    className={`capitalize ${styles.heading}`}
+                  >
+                    Task ID:
+                  </label>
+                  <span className={`capitalize ${styles.content}`} id="task-id">
+                    {selectedTask?.id}
+                  </span>
+                </div>
+              )}
+              {/* priority */}
+              <div className={`flex items-center gap-lg ${styles.field_box}`}>
+                <span className={`capitalize ${styles.heading}`}>
+                  Priority:
+                </span>
+                <DropDownBox
+                  border={"1px solid var(--primaryColor)"}
+                  options={[
+                    { id: 1, name: "high", color: "darkred" },
+                    { id: 2, name: "medium", color: "orange" },
+                    { id: 3, name: "low", color: "darkgreen" },
+                  ]}
+                  selectedItem={taskPriority}
+                  setSelectedItem={setTaskPriority}
+                  formik={formik}
+                  name="priority"
+                />
+              </div>
+              {(formik.touched.priority || formik.values.priority !== "") &&
+              formik.errors.priority ? (
+                <p className={`red fw-bold ${styles.error_txt}`}>
+                  {formik.errors.priority}
+                </p>
+              ) : null}
+              {/* category */}
+              <div className={`flex flex-column gap-sm ${styles.field_box}`}>
+                <span className={`capitalize ${styles.heading}`}>
+                  Category:
+                </span>
+                <DropDownBox
+                  border={"1px solid var(--primaryColor)"}
+                  options={categories}
+                  selectedItem={taskCategory}
+                  setSelectedItem={setTaskCategory}
+                  formik={formik}
+                  name="category_id"
+                />
+              </div>
+              {formik.touched.category_id && formik.errors.category_id ? (
+                <p className={`red fw-bold ${styles.error_txt}`}>
+                  {formik.errors.category_id}
+                </p>
+              ) : null}
+
+              {/* task title */}
+              <div className={`flex flex-column ${styles.field_box}`}>
                 <label
-                  htmlFor="task-id"
+                  htmlFor="task-title"
                   className={`capitalize ${styles.heading}`}
                 >
-                  Task ID:
+                  Title:
                 </label>
-                <span className={`capitalize ${styles.content}`} id="task-id">
-                  {selectedTask?.id}
-                </span>
-              </div>
-            )}
-            {/* priority */}
-            <div className={`flex items-center gap-lg ${styles.field_box}`}>
-              <span className={`capitalize ${styles.heading}`}>Priority:</span>
-              <DropDownBox
-                border={"1px solid var(--primaryColor)"}
-                options={[
-                  { id: 1, name: "high", color: "darkred" },
-                  { id: 2, name: "medium", color: "orange" },
-                  { id: 3, name: "low", color: "darkgreen" },
-                ]}
-                selectedItem={taskPriority}
-                setSelectedItem={setTaskPriority}
-                formik={formik}
-                name="priority"
-              />
-            </div>
-            {(formik.touched.priority || formik.values.priority !== "") &&
-            formik.errors.priority ? (
-              <p className={`red fw-bold ${styles.error_txt}`}>
-                {formik.errors.priority}
-              </p>
-            ) : null}
-            {/* category */}
-            <div className={`flex flex-column gap-sm ${styles.field_box}`}>
-              <span className={`capitalize ${styles.heading}`}>Category:</span>
-              <DropDownBox
-                border={"1px solid var(--primaryColor)"}
-                options={categories}
-                selectedItem={taskCategory}
-                setSelectedItem={setTaskCategory}
-                formik={formik}
-                name="category_id"
-              />
-            </div>
-            {formik.touched.category_id && formik.errors.category_id ? (
-              <p className={`red fw-bold ${styles.error_txt}`}>
-                {formik.errors.category_id}
-              </p>
-            ) : null}
-
-            {/* task title */}
-            <div className={`flex flex-column ${styles.field_box}`}>
-              <label
-                htmlFor="task-title"
-                className={`capitalize ${styles.heading}`}
-              >
-                Title:
-              </label>
-              <input
-                type="text"
-                className={`capitalize ${styles.content}`}
-                id="task-title"
-                name="title"
-                value={formik.values.title}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-            </div>
-            {(formik.touched.title || formik.values.title !== "") &&
-            formik.errors.title ? (
-              <p className={`red fw-bold ${styles.error_txt}`}>
-                {formik.errors.title}
-              </p>
-            ) : null}
-            {/* task description */}
-            <div className={`flex flex-column ${styles.field_box}`}>
-              <label
-                htmlFor={`task-description`}
-                className={`capitalize ${styles.heading}`}
-              >
-                Description:
-              </label>
-              <textarea
-                id="task-description"
-                className={`capitalize ${styles.content} ${styles.task_desc}`}
-                name="description"
-                value={formik.values.description}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-            </div>
-            {(formik.touched.description || formik.values.description !== "") &&
-            formik.errors.description ? (
-              <p className={`red fw-bold ${styles.error_txt}`}>
-                {formik.errors.description}
-              </p>
-            ) : null}
-
-            {/* task image url */}
-            <div className={`flex flex-column ${styles.field_box}`}>
-              <label
-                htmlFor="task-image-url"
-                className={`capitalize ${styles.heading}`}
-              >
-                Image URL:
-              </label>
-              <div
-                className={`flex items-center gap-md ${styles.task_img_box}`}
-              >
                 <input
                   type="text"
-                  className={`capitalize w-75 ${styles.content}`}
-                  id="task-image-url"
-                  name="image_url"
-                  value={formik.values.image_url}
+                  className={`capitalize ${styles.content}`}
+                  id="task-title"
+                  name="title"
+                  value={formik.values.title}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                <img
-                  src={formik.values.image_url || null}
-                  alt={formik.values.title}
-                  className="rounded-sm"
+              </div>
+              {(formik.touched.title || formik.values.title !== "") &&
+              formik.errors.title ? (
+                <p className={`red fw-bold ${styles.error_txt}`}>
+                  {formik.errors.title}
+                </p>
+              ) : null}
+              {/* task description */}
+              <div className={`flex flex-column ${styles.field_box}`}>
+                <label
+                  htmlFor={`task-description`}
+                  className={`capitalize ${styles.heading}`}
+                >
+                  Description:
+                </label>
+                <textarea
+                  id="task-description"
+                  className={`capitalize ${styles.content} ${styles.task_desc}`}
+                  name="description"
+                  value={formik.values.description}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
               </div>
-            </div>
-            {(formik.touched.image_url || formik.values.image_url !== "") &&
-            formik.errors.image_url ? (
-              <p className={`red fw-bold ${styles.error_txt}`}>
-                {formik.errors.image_url}
-              </p>
-            ) : null}
+              {(formik.touched.description ||
+                formik.values.description !== "") &&
+              formik.errors.description ? (
+                <p className={`red fw-bold ${styles.error_txt}`}>
+                  {formik.errors.description}
+                </p>
+              ) : null}
 
-            {/* task due date */}
-            <div
-              className={`flex items-center gap-lg field-box ${styles.field_box}`}
-            >
-              <label
-                htmlFor="task-due"
-                className={`capitalize ${styles.heading}`}
+              {/* task image url */}
+              <div className={`flex flex-column ${styles.field_box}`}>
+                <label
+                  htmlFor="task-image-url"
+                  className={`capitalize ${styles.heading}`}
+                >
+                  Image URL:
+                </label>
+                <div
+                  className={`flex items-center gap-md ${styles.task_img_box}`}
+                >
+                  <input
+                    type="text"
+                    className={`capitalize w-75 ${styles.content}`}
+                    id="task-image-url"
+                    name="image_url"
+                    value={formik.values.image_url}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  <img
+                    src={formik.values.image_url || null}
+                    alt={formik.values.title}
+                    className="rounded-sm"
+                  />
+                </div>
+              </div>
+              {(formik.touched.image_url || formik.values.image_url !== "") &&
+              formik.errors.image_url ? (
+                <p className={`red fw-bold ${styles.error_txt}`}>
+                  {formik.errors.image_url}
+                </p>
+              ) : null}
+
+              {/* task due date */}
+              <div
+                className={`flex items-center gap-lg field-box ${styles.field_box}`}
               >
-                Due Date:
-              </label>
-              <input
-                type="date"
-                className={`capitalize ${styles.content}`}
-                id="task-due"
-                name="due_date"
-                value={formik.values.due_date}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-            </div>
-            {(formik.touched.due_date || formik.values.due_date !== "") &&
-            formik.errors.due_date ? (
-              <p className={`red fw-bold ${styles.error_txt}`}>
-                {formik.errors.due_date}
-              </p>
-            ) : null}
-            {/* close modal */}
-            <div
-              className={`flex-center gap-md modal-btns ${styles.modal_btns}`}
-            >
-              <Button
-                bgColor={"var(--primaryColor)"}
-                color={"var(--tertiaryColor)"}
-                border={"2px solid var(--primaryColor)"}
-                width={"50%"}
-                type="submit"
+                <label
+                  htmlFor="task-due"
+                  className={`capitalize ${styles.heading}`}
+                >
+                  Due Date:
+                </label>
+                <input
+                  type="date"
+                  className={`capitalize ${styles.content}`}
+                  id="task-due"
+                  name="due_date"
+                  value={formik.values.due_date}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+              </div>
+              {(formik.touched.due_date || formik.values.due_date !== "") &&
+              formik.errors.due_date ? (
+                <p className={`red fw-bold ${styles.error_txt}`}>
+                  {formik.errors.due_date}
+                </p>
+              ) : null}
+              {/* close modal */}
+              <div
+                className={`flex-center gap-md modal-btns ${styles.modal_btns}`}
               >
-                {taskAction === "add"
-                  ? "Create Task"
-                  : taskAction === "edit"
-                  ? "Edit Task"
-                  : ""}
-              </Button>
-              <Button
-                bgColor={"transparent"}
-                color={"var(--primaryColor)"}
-                border={"2px solid var(--primaryColor)"}
-                width={"50%"}
-                onClickBtn={() => closeModal(setIsModalOpen, navigate)}
-              >
-                Cancel
-              </Button>
-            </div>
-          </form>
-        </section>
+                <Button
+                  bgColor={"var(--primaryColor)"}
+                  color={"var(--tertiaryColor)"}
+                  border={"2px solid var(--primaryColor)"}
+                  width={"50%"}
+                  type="submit"
+                >
+                  {taskAction === "add"
+                    ? "Create Task"
+                    : taskAction === "edit"
+                    ? "Edit Task"
+                    : ""}
+                </Button>
+                <Button
+                  bgColor={"transparent"}
+                  color={"var(--primaryColor)"}
+                  border={"2px solid var(--primaryColor)"}
+                  width={"50%"}
+                  onClickBtn={() => closeModal(setIsModalOpen, navigate)}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          </section>
+        )}
       </div>
     </section>
   );

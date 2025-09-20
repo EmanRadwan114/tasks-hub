@@ -5,7 +5,9 @@ import Footer from "../Footer/Footer";
 
 function Home() {
   return (
-    <>
+    <section
+      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+    >
       {/* <TaskDetails /> */}
       <Header />
       <main className="container">
@@ -13,7 +15,7 @@ function Home() {
         <Tasks />
       </main>
       <Footer />
-    </>
+    </section>
   );
 }
 
