@@ -1,0 +1,74 @@
+.task_priority {
+  padding: 0.2rem;
+  display: block;
+}
+
+.card_container {
+  width: calc(100% / 3 - 20px);
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 7px;
+  background-color: white;
+}
+
+.card_container:hover .task_img {
+  transform: scale(1.1);
+}
+
+.task_img_box {
+  overflow: hidden;
+}
+
+.task_img {
+  height: 150px;
+  transition: transform 800ms;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+}
+
+.task_body {
+  padding: 0.2rem 1.5rem 1.5rem 1.5rem;
+  overflow: visible;
+}
+
+.actions_list {
+  z-index: 9999;
+  right: 55%;
+  top: 55%;
+  background-color: white;
+  border-radius: 7px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
+  min-width: 150px;
+}
+
+.task_title {
+  font-size: calc(1rem + 0.2vw);
+  margin-bottom: 0.75rem;
+}
+
+.task_title ~ p {
+  opacity: 0.5;
+}
+
+.task_details {
+  align-items: start;
+}
+
+.task_priority_box {
+  margin: 0.5rem 0 1rem 0;
+}
+
+.task_priority_box:first-child {
+  color: var(--primaryColor);
+}
+
+.task_due_date {
+  border-radius: 15px;
+  padding: 0.2rem 0.85rem;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+.completed_txt {
+  color: darkgreen;
+  padding: 0.5rem 0 0 0.4rem;
+}

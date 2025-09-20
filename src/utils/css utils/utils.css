@@ -1,0 +1,125 @@
+.flex {
+  display: flex;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.items-start {
+  align-items: start;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-stretch {
+  align-items: stretch;
+}
+
+.center {
+  text-align: center;
+}
+
+.end {
+  text-align: end;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.fw-bold {
+  font-weight: 700;
+}
+
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+.fixed {
+  position: fixed;
+}
+
+.w-25 {
+  width: 25%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.w-75 {
+  width: 75%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.gap-sm {
+  gap: 0.5rem;
+}
+.gap-md {
+  gap: 0.85rem;
+}
+.gap-lg {
+  gap: 1rem;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.green {
+  color: darkgreen;
+}
+.orange {
+  color: orange;
+}
+.red {
+  color: darkred;
+}
+.bg-green {
+  background-color: darkgreen;
+}
+.bg-orange {
+  background-color: orange;
+}
+.bg-red {
+  background-color: darkred;
+}
+
+.rounded-sm {
+  border-radius: 5px;
+}
+.rounded-md {
+  border-radius: 20px;
+}
+
+.h-screen {
+  min-height: 100vh;
+}

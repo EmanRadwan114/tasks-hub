@@ -1,0 +1,17 @@
+.btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 0;
+}
+.btn:first-child {
+  background-color: #be9bc7;
+  border-radius: 5px 0 0 5px;
+}
+.btn:last-child {
+  background-color: #b87781;
+  border-radius: 0 5px 5px 0;
+}
+
+.btn:disabled {
+  background-color: lightgray;
+  color: rgb(84, 82, 82);
+}

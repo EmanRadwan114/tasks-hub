@@ -1,0 +1,23 @@
+.filter_list {
+  overflow-y: scroll;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  max-height: 200px;
+  z-index: 999;
+  left: 0;
+  right: 0;
+  top: 100%;
+}
+
+.categ_icon {
+  background-color: var(--primaryColor);
+  padding: 0.2rem 0.85rem;
+}
+
+.categ_icon > img {
+  vertical-align: middle;
+}
+
+.filter_box {
+  font-size: 1.1rem;
+  min-width: 230px;
+}

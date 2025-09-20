@@ -1,0 +1,7 @@
+.controls_container {
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+}

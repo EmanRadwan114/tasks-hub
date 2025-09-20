@@ -1,0 +1,15 @@
+.filter_list {
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  max-height: 150px;
+  overflow: auto;
+  z-index: 999;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background-color: white;
+}
+
+.filter_box {
+  font-size: 1.2rem;
+  padding: 0.2rem 0.85rem;
+}
