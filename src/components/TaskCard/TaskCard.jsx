@@ -114,7 +114,6 @@ function TaskCard({ task }) {
               cursor="pointer"
               color="var(--primaryColor)"
               onClick={() => setIsActionsOpen((previous) => !previous)}
-              // onMouseOver={() => setIsActionsOpen((previous) => !previous)}
               size={40}
               style={{ padding: "0.5rem" }}
             />
@@ -122,7 +121,6 @@ function TaskCard({ task }) {
             {isActionsOpen && (
               <ul
                 className={`absolute ${styles.actions_list}`}
-                // onMouseLeave={() => setIsActionsOpen((previous) => !previous)}
               >
                 <TaskAction
                   color="green"

@@ -47,21 +47,32 @@ function Tasks() {
           <Spinner />
         ) : (
           <>
-            {displayedTasks?.map((task, indx) => (
-              <TaskCard key={indx} task={task} />
-            ))}
-            <Pagination
-              onHandlePrev={() => {
-                setPage((old) => old - 1);
-              }}
-              onHandleNext={() => {
-                if (!isPlaceholderData && displayedTasks?.length === limit) {
-                  setPage((old) => old + 1);
-                }
-              }}
-              disablePrev={page === 0}
-              disableNext={isPlaceholderData || displayedTasks?.length < limit}
-            />
+            {displayedTasks.length ? (
+              <>
+                {displayedTasks?.map((task, indx) => (
+                  <TaskCard key={indx} task={task} />
+                ))}
+                <Pagination
+                  onHandlePrev={() => {
+                    setPage((old) => old - 1);
+                  }}
+                  onHandleNext={() => {
+                    if (
+                      !isPlaceholderData &&
+                      displayedTasks?.length === limit
+                    ) {
+                      setPage((old) => old + 1);
+                    }
+                  }}
+                  disablePrev={page === 0}
+                  disableNext={
+                    isPlaceholderData || displayedTasks?.length < limit
+                  }
+                />
+              </>
+            ) : (
+              <p className="h-screen">No Tasks Found 😔</p>
+            )}
           </>
         )}
       </section>

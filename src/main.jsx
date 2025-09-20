@@ -13,6 +13,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import Home from "./components/Home/Home.jsx";
 import SearchContextProvider from "./context/SearchContext.jsx";
 import Layout from "./components/Layout/Layout.jsx";
+import NotFound from "./components/NotFound/NotFound.jsx";
 
 // react query setup
 const queryClient = new QueryClient();
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/:taskId",
         element: <Home />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },
