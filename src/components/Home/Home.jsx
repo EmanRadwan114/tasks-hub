@@ -5,17 +5,20 @@ import Footer from "../Footer/Footer";
 
 function Home() {
   return (
-    <section
-      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+    <main
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+      }}
     >
-      {/* <TaskDetails /> */}
       <Header />
-      <main className="container">
+      <section className="container">
         <TasksControls />
         <Tasks />
-      </main>
+      </section>
       <Footer />
-    </section>
+    </main>
   );
 }
 

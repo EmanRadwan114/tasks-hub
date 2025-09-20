@@ -111,7 +111,7 @@ function TaskCard({ task }) {
             {isActionsOpen && (
               <ul
                 className={`absolute ${styles.actions_list}`}
-                onMouseLeave={() => setIsActionsOpen((previous) => !previous)}
+                onMouseLeave={() => setIsActionsOpen(false)}
               >
                 <TaskAction
                   color="green"
