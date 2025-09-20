@@ -5,13 +5,7 @@ import Footer from "../Footer/Footer";
 
 function Home() {
   return (
-    <main
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
-      }}
-    >
+    <main>
       <Header />
       <section className="container">
         <TasksControls />
