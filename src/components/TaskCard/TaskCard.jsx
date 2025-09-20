@@ -104,8 +104,9 @@ function TaskCard({ task }) {
             <EllipsisVertical
               cursor="pointer"
               color="var(--primaryColor)"
-              onClick={() => setIsActionsOpen((previous) => !previous)}
+              // onClick={() => setIsActionsOpen((previous) => !previous)}
               onMouseEnter={() => setIsActionsOpen(true)}
+              size={30}
             />
             {/* task actions */}
             {isActionsOpen && (
