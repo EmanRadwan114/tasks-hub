@@ -27,7 +27,7 @@ function TaskEditModal() {
   const [formInitialValues, setFormInitialValues] = useState({
     title: "",
     description: "",
-    image_url: "",
+    image_url: "https://picsum.photos/400/300?random=3649",
     priority: "",
     category_id: categories.length,
     due_date: "",
@@ -49,7 +49,8 @@ function TaskEditModal() {
     setFormInitialValues({
       title: selectedTask?.title || "",
       description: selectedTask?.description || "",
-      image_url: selectedTask?.image_url || "",
+      image_url:
+        selectedTask?.image_url || "https://picsum.photos/400/300?random=3649",
       priority: selectedTask?.priority || "high",
       category_id: selectedTask?.category_id || 25,
       due_date: selectedTask?.due_date || "",
