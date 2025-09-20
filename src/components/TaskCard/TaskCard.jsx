@@ -113,14 +113,16 @@ function TaskCard({ task }) {
             <EllipsisVertical
               cursor="pointer"
               color="var(--primaryColor)"
-              onMouseEnter={() => setIsActionsOpen((previous) => !previous)}
-              size={24}
+              onClick={() => setIsActionsOpen((previous) => !previous)}
+              // onMouseOver={() => setIsActionsOpen((previous) => !previous)}
+              size={40}
+              style={{ padding: "0.5rem" }}
             />
             {/* task actions */}
             {isActionsOpen && (
               <ul
                 className={`absolute ${styles.actions_list}`}
-                onMouseLeave={() => setIsActionsOpen(false)}
+                // onMouseLeave={() => setIsActionsOpen((previous) => !previous)}
               >
                 <TaskAction
                   color="green"
