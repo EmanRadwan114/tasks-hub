@@ -7,7 +7,6 @@ function TasksContextProvider({ children }) {
   const [taskAction, setTaskAction] = useState("view");
   const [taskPriority, setTaskPriority] = useState("high");
   const [page, setPage] = useState(0);
-  const [filterBy, setFilterBy] = useState("");
 
   return (
     <tasksContext.Provider
@@ -22,8 +21,6 @@ function TasksContextProvider({ children }) {
         setTaskPriority,
         page,
         setPage,
-        filterBy,
-        setFilterBy,
       }}
     >
       {children}
@@ -43,8 +40,6 @@ export const useTasks = () => {
     setTaskPriority,
     page,
     setPage,
-    filterBy,
-    setFilterBy,
   } = useContext(tasksContext);
   return {
     tasks,
@@ -57,8 +52,6 @@ export const useTasks = () => {
     setTaskPriority,
     page,
     setPage,
-    filterBy,
-    setFilterBy,
   };
 };
 

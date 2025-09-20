@@ -13,15 +13,17 @@ function Tasks() {
   const limit = 12;
   const offset = limit * page;
 
-  const { data: fetchedTasks, isLoading: tasksIsLoading } = useGetAllTasks(
-    12,
-    offset
-  );
+  const {
+    data: fetchedTasks,
+    isLoading: tasksIsLoading,
+    isFetching: taskIsFetching,
+  } = useGetAllTasks(12, offset);
 
   const {
     data: filteredTasksByCateg,
     isPlaceholderData,
     isLoading: filterdTaskIsLoading,
+    isFetching: filteredTaskIsFetching,
   } = useGetTasksByCateg(selectedCategory?.id, limit, offset);
 
   useEffect(() => {
@@ -38,7 +40,10 @@ function Tasks() {
       <section
         className={`relative flex flex-wrap tasks-container ${styles.tasks_container}`}
       >
-        {tasksIsLoading || filterdTaskIsLoading ? (
+        {tasksIsLoading ||
+        filterdTaskIsLoading ||
+        filteredTaskIsFetching ||
+        taskIsFetching ? (
           <Spinner />
         ) : (
           <>
