@@ -13,7 +13,7 @@ function NotFound() {
           src={img}
           alt="not found 404 error"
           style={style.img}
-          className="rounded-md"
+          className="rounded-md not-found-img"
         />
         <Link to={"/"}>
           <Button
@@ -33,7 +33,7 @@ export default NotFound;
 const style = {
   container: { minHeight: "100vh", padding: "1rem" },
   img: {
-    width: "40%",
+    maxWidth: "50%",
   },
-  txt: { fontSize: "1.8rem" },
+  txt: { fontSize: "1.5rem" },
 };

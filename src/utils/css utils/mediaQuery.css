@@ -47,6 +47,20 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+  /* not found */
+  .not-found-img {
+    max-width: 100% !important;
+  }
+}
+
+@media screen and (min-width: 768.1px) and (max-width: 992px) {
+  /* not found */
+  .not-found-img {
+    max-width: 70% !important;
+  }
+}
+
 @media screen and (min-width: 567.1px) {
   /* general */
   .container {
