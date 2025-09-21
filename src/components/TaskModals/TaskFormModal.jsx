@@ -18,7 +18,7 @@ import Spinner from "../Spinner/Spinner";
 
 function TaskEditModal() {
   const { taskId } = useParams();
-  const { setIsModalOpen, taskAction, setTaskPriority, taskPriority } =
+  const { setIsModalOpen, taskAction, setTaskPriority, taskPriority, setPage } =
     useTasks();
   const { categories, setTaskCategory, taskCategory } = useCategories();
   const { data: selectedTask, isLoading } = useGetTaskByID(taskId);
@@ -101,6 +101,7 @@ function TaskEditModal() {
         updateTask({ taskId, updatedData: values });
       } else if (taskAction === "add") {
         createTask({ newData: values });
+        setPage(0);
       }
 
       if (formik.touched && formik.isValid) {

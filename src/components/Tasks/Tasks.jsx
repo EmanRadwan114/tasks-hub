@@ -8,7 +8,7 @@ import Pagination from "../Pagination/Pagination";
 import Spinner from "../Spinner/Spinner";
 
 function Tasks() {
-  const { tasks, setTasks, page, setPage } = useTasks();
+  const { setTasks, page, setPage } = useTasks();
   const { selectedCategory } = useCategories();
   const limit = 12;
   const offset = limit * page;
@@ -21,19 +21,16 @@ function Tasks() {
 
   const {
     data: filteredTasksByCateg,
-    isPlaceholderData,
     isLoading: filterdTaskIsLoading,
     isFetching: filteredTaskIsFetching,
   } = useGetTasksByCateg(selectedCategory?.id, limit, offset);
 
-  useEffect(() => {
-    setTasks(tasks);
-  }, [tasks, setTasks]);
-
   // derived state
-  const displayedTasks = selectedCategory?.id
-    ? filteredTasksByCateg
-    : fetchedTasks;
+  const displayedTasks = selectedCategory ? filteredTasksByCateg : fetchedTasks;
+
+  useEffect(() => {
+    setTasks(displayedTasks);
+  }, [displayedTasks, setTasks]);
 
   return (
     <>
@@ -45,35 +42,31 @@ function Tasks() {
         filteredTaskIsFetching ||
         taskIsFetching ? (
           <Spinner />
-        ) : (
+        ) : displayedTasks.length ? (
           <>
-            {displayedTasks.length ? (
-              <>
-                {displayedTasks?.map((task, indx) => (
-                  <TaskCard key={indx} task={task} />
-                ))}
-                <Pagination
-                  onHandlePrev={() => {
-                    setPage((old) => old - 1);
-                  }}
-                  onHandleNext={() => {
-                    if (
-                      !isPlaceholderData &&
-                      displayedTasks?.length === limit
-                    ) {
-                      setPage((old) => old + 1);
-                    }
-                  }}
-                  disablePrev={page === 0}
-                  disableNext={
-                    isPlaceholderData || displayedTasks?.length < limit
-                  }
-                />
-              </>
-            ) : (
-              <p className="h-screen">No Tasks Found 😔</p>
-            )}
+            {displayedTasks?.map((task, indx) => (
+              <TaskCard key={indx} task={task} />
+            ))}
+            <Pagination
+              onHandlePrev={() => {
+                setPage((old) => old - 1);
+              }}
+              onHandleNext={() => {
+                setPage((old) => old + 1);
+              }}
+              disablePrev={page === 0}
+              disableNext={displayedTasks?.length < limit}
+            />
           </>
+        ) : (
+          <div className="flex-center w-100">
+            <p
+              className="capitalize center fw-bold"
+              style={{ fontSize: "1.5rem" }}
+            >
+              No Tasks Found 😞
+            </p>
+          </div>
         )}
       </section>
     </>

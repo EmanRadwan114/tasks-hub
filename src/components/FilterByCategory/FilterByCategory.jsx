@@ -6,7 +6,6 @@ import FilterMenu from "./FilterMenu";
 
 function FilterByCategory() {
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
-
   const { selectedCategory } = useCategories();
 
   return (

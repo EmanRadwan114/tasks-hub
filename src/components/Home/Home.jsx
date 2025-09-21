@@ -16,12 +16,17 @@ function Home() {
   const { isModalOpen, taskAction, setTaskPriority } = useTasks();
 
   // fetch categories
-  const { data: categories = [], isLoading: categIsLoading } =
-    useGetAllCategories();
+  const {
+    data: categories = [],
+    isLoading: categIsLoading,
+    isSuccess,
+  } = useGetAllCategories();
 
   useEffect(() => {
-    setCategories(categories);
-  }, [categories, setCategories]);
+    if (isSuccess) {
+      setCategories(categories);
+    }
+  }, [categories, setCategories, isSuccess]);
 
   useEffect(() => {
     setTaskPriority("high");

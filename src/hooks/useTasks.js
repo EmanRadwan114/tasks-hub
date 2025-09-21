@@ -16,7 +16,7 @@ export const useGetAllTasks = (limit = 12, offset = 0) =>
 
 export const useGetTasksByCateg = (categId, limit = 12, offset = 0) =>
   useQuery({
-    queryKey: ["tasks", categId, limit, offset],
+    queryKey: ["tasksByCateg", categId, limit, offset],
     queryFn: () => tasksServive.getTaskByCateg(categId, limit, offset),
     enabled: !!categId,
     placeholderData: keepPreviousData,
