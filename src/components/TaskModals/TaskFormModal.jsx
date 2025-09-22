@@ -109,8 +109,6 @@ function TaskEditModal() {
     validateOnBlur: true,
     validateOnChange: true,
     onSubmit: (values) => {
-      console.log(values);
-
       values.category_id = categories.find(
         (categ) => categ.name === taskCategory
       ).id;

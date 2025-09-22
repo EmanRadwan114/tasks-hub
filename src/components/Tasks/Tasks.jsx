@@ -36,6 +36,7 @@ function Tasks() {
     <>
       <section
         className={`relative flex flex-wrap tasks-container ${styles.tasks_container}`}
+        style={{ minHeight: "50vh" }}
       >
         {tasksIsLoading ||
         filterdTaskIsLoading ||
@@ -47,16 +48,6 @@ function Tasks() {
             {displayedTasks?.map((task, indx) => (
               <TaskCard key={indx} task={task} />
             ))}
-            <Pagination
-              onHandlePrev={() => {
-                setPage((old) => old - 1);
-              }}
-              onHandleNext={() => {
-                setPage((old) => old + 1);
-              }}
-              disablePrev={page === 0}
-              disableNext={displayedTasks?.length < limit}
-            />
           </>
         ) : (
           <div className="flex-center w-100">
@@ -68,6 +59,16 @@ function Tasks() {
             </p>
           </div>
         )}
+        <Pagination
+          onHandlePrev={() => {
+            setPage((old) => old - 1);
+          }}
+          onHandleNext={() => {
+            setPage((old) => old + 1);
+          }}
+          disablePrev={page === 0}
+          disableNext={displayedTasks?.length < limit}
+        />
       </section>
     </>
   );
