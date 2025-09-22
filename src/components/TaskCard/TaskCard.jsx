@@ -66,29 +66,31 @@ function TaskCard({ task }) {
       </div>
       <div className={styles.task_body}>
         {/*  priority  */}
-        <p className={`flex-between ${styles.task_priority_box}`}>
-          <span className="capitalize fw-bold">Priority</span>
-          <span
-            className={`capitalize center fw-bold w-25 rounded-md ${
-              styles.task_priority
-            } ${
-              task?.priority === "high"
-                ? "bg-red"
-                : task?.priority === "medium"
-                ? "bg-orange"
-                : "bg-green"
-            }`}
-            style={{
-              color: `${
+        {task?.priority && (
+          <p className={`flex-between ${styles.task_priority_box}`}>
+            <span className="capitalize fw-bold">Priority</span>
+            <span
+              className={`capitalize center fw-bold w-25 rounded-md ${
+                styles.task_priority
+              } ${
                 task?.priority === "high"
-                  ? "var(--tertiaryColor)"
+                  ? "bg-red"
                   : task?.priority === "medium"
-                  ? "var(--textColor)"
-                  : "white"
-              }`,
-            }}
-          ></span>
-        </p>
+                  ? "bg-orange"
+                  : "bg-green"
+              }`}
+              style={{
+                color: `${
+                  task?.priority === "high"
+                    ? "var(--tertiaryColor)"
+                    : task?.priority === "medium"
+                    ? "var(--textColor)"
+                    : "white"
+                }`,
+              }}
+            ></span>
+          </p>
+        )}
         {/* task details */}
         <div className={`flex-between gap-sm ${styles.task_details}`}>
           <h2
@@ -119,9 +121,7 @@ function TaskCard({ task }) {
             />
             {/* task actions */}
             {isActionsOpen && (
-              <ul
-                className={`absolute ${styles.actions_list}`}
-              >
+              <ul className={`absolute ${styles.actions_list}`}>
                 <TaskAction
                   color="green"
                   icon={<SquareCheckBig />}

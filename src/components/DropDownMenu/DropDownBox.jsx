@@ -21,7 +21,11 @@ function DropDownBox({
         onClick={() => setIsFilterMenuOpen((prev) => !prev)}
       >
         <p className="capitalize">
-          {name == "category_id" ? selectedItem : formik.values[name]}
+          {name === "category_id" && formik.values[name]
+            ? selectedItem
+            : name === "priority" && formik.values[name]
+            ? formik.values[name]
+            : "Choose Item"}
         </p>
         <span>
           {isFilterMenuOpen ? (

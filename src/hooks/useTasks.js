@@ -37,8 +37,9 @@ export const useCreateTask = () => {
       queryClient.invalidateQueries(["tasks"]);
       toast.success(`Task Created Successfully`);
     },
-    onError: () => {
-      toast.error("Error in Creating The New Task");
+    onError: (err) => {
+      toast.error(err?.response?.data?.message);
+      toast.error("Error in Creating the task");
     },
   });
 };
@@ -53,7 +54,10 @@ export const useUpdateTask = () => {
       queryClient.invalidateQueries(["tasks"]);
       toast.success(`Task Updated Successfully`);
     },
-    onError: () => toast.error("Error in Updating the Task"),
+    onError: (err) => {
+      toast.error(err?.response?.data?.message);
+      toast.error("Error in Updating the task");
+    },
   });
 };
 
@@ -66,6 +70,9 @@ export const useDeleteTask = () => {
       queryClient.invalidateQueries(["tasks"]);
       toast.success(`Task Deleted Successfully`);
     },
-    onError: () => toast.error("Error in Deleting the Task"),
+    onError: (err) => {
+      toast.error(err?.response?.data?.message);
+      toast.error("Error in Deleting the task");
+    },
   });
 };

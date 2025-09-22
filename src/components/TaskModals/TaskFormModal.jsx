@@ -9,7 +9,7 @@ import { useNavigate, useParams } from "react-router";
 import styles from "./TaskModal.module.css";
 import { closeModal } from "../../utils/helperFn";
 import DropDownBox from "../DropDownMenu/DropDownBox";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Button from "../Button/Button";
 import { useCategories } from "../../context/CategoriesContext";
 import { useFormik } from "formik";
@@ -25,14 +25,13 @@ function TaskEditModal() {
   const { mutate: updateTask } = useUpdateTask();
   const { mutate: createTask } = useCreateTask();
 
-  const [formInitialValues, setFormInitialValues] = useState({
+  const [editInitialValues, setEditInitialValues] = useState({
     title: "",
+    category_id: 0,
+    image_url: "",
     description: "",
-    image_url: "https://picsum.photos/400/300?random=3649",
     priority: "",
-    category_id: categories.length,
-    due_date: "",
-    completed: false,
+    due_date: null,
   });
 
   const navigate = useNavigate();
@@ -46,56 +45,79 @@ function TaskEditModal() {
     setTaskCategory(taskCateg?.name);
   }, [selectedTask, setTaskPriority, taskCateg, setTaskCategory]);
 
+  // get current date
+  const currentDate = useMemo(
+    () => new Date(new Date().toISOString().split("T")[0]),
+    []
+  );
+
   useEffect(() => {
-    setFormInitialValues({
+    setEditInitialValues({
       title: selectedTask?.title || "",
-      description: selectedTask?.description || "",
+      category_id: selectedTask?.category_id || 0,
       image_url:
         selectedTask?.image_url || "https://picsum.photos/400/300?random=3649",
-      priority: selectedTask?.priority || "high",
-      category_id: selectedTask?.category_id || 25,
-      due_date: selectedTask?.due_date || "",
-      completed: selectedTask?.completed || false,
+      description: selectedTask?.description || "",
+      priority: selectedTask?.priority || "",
+      due_date: selectedTask?.due_date || null,
     });
-  }, [selectedTask, taskCateg, categories]);
+  }, [selectedTask]);
 
-  // form validation & schema
-  const validationSchema = Yup.object({
+  // form validation & schemas
+  const UpdateValidationSchema = Yup.object({
     title: Yup.string()
       .min(3, "Title should be at least 3 characters")
       .max(255, "Title should not exceed 255 characters")
       .required("Title is Required"),
+    category_id: Yup.string().required("Category ID is Required"),
+    image_url: Yup.string()
+      .min(3, "Description should be at least 3 characters")
+      .notRequired()
+      .default("https://picsum.photos/400/300?random=3649"),
     description: Yup.string()
       .min(3, "Description should be at least 3 characters")
       .max(255, "Image URL should not exceed 500 characters")
-      .notRequired(),
-    image_url: Yup.string()
-      .min(3, "Description should be at least 3 characters")
       .notRequired(),
     priority: Yup.string()
       .oneOf(
         ["high", "medium", "low"],
         "Priority can only be high, medium or low"
       )
-      .default("high")
-      .required("Priority is Required"),
-    category_id: Yup.string().required("Category ID is Required"),
-    due_date: Yup.date()
-      .typeError("Must be a valid Date YYYY-M-DD")
-      .required("Due Date is Required"),
-    completed: Yup.boolean().default(false).notRequired(),
+      .notRequired(),
+    due_date: Yup.date().notRequired(),
   });
 
+  const createValidationSchema = Yup.object({
+    category_id: Yup.string().required("Category ID is Required"),
+    title: Yup.string()
+      .min(3, "Title should be at least 3 characters")
+      .max(255, "Title should not exceed 255 characters")
+      .required("Title is Required"),
+    image_url: Yup.string()
+      .default("https://picsum.photos/400/300?random=3649")
+      .notRequired(),
+  });
+
+  const initialValues = taskAction === "edit" ? editInitialValues : {};
+  const validationSchema =
+    taskAction === "edit" ? UpdateValidationSchema : createValidationSchema;
+
   const formik = useFormik({
-    initialValues: formInitialValues,
+    initialValues,
     validationSchema,
     enableReinitialize: true,
     validateOnBlur: true,
     validateOnChange: true,
     onSubmit: (values) => {
+      console.log(values);
+
       values.category_id = categories.find(
         (categ) => categ.name === taskCategory
       ).id;
+
+      if (values.due_date === "") {
+        values.due_date = null;
+      }
 
       if (taskAction === "edit") {
         updateTask({ taskId, updatedData: values });
@@ -181,8 +203,7 @@ function TaskEditModal() {
                   name="priority"
                 />
               </div>
-              {(formik.touched.priority || formik.values.priority !== "") &&
-              formik.errors.priority ? (
+              {formik.errors.priority ? (
                 <p className={`red fw-bold ${styles.error_txt}`}>
                   {formik.errors.priority}
                 </p>
@@ -201,7 +222,7 @@ function TaskEditModal() {
                   name="category_id"
                 />
               </div>
-              {formik.touched.category_id && formik.errors.category_id ? (
+              {formik.errors.category_id ? (
                 <p className={`red fw-bold ${styles.error_txt}`}>
                   {formik.errors.category_id}
                 </p>
@@ -302,6 +323,7 @@ function TaskEditModal() {
                 </label>
                 <input
                   type="date"
+                  placeholder="YYYY-MM-DD"
                   className={`capitalize ${styles.content}`}
                   id="task-due"
                   name="due_date"
@@ -310,8 +332,7 @@ function TaskEditModal() {
                   onBlur={formik.handleBlur}
                 />
               </div>
-              {(formik.touched.due_date || formik.values.due_date !== "") &&
-              formik.errors.due_date ? (
+              {formik.errors.due_date ? (
                 <p className={`red fw-bold ${styles.error_txt}`}>
                   {formik.errors.due_date}
                 </p>
